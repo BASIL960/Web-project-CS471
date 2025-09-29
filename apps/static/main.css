@@ -1,0 +1,164 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.link-style {
+    padding: 20px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    margin-bottom: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.green-bg {
+    background-color: #e6ffe6;
+    color: #8B4513;
+}
+
+.gray-bg {
+    background-color: #696969;
+    color: #FFD700;
+}
+
+.black-bg {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.link-style:visited {
+    opacity: 0.8;
+}
+
+.link-style:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transform: scale(1.01);
+    transition: all 0.2s ease-in-out;
+}
+
+.link-style:active {
+    opacity: 0.7;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    margin: 20px;
+    background-color: #fdfdfd;
+}
+
+h1 {
+    font-family: 'Georgia', serif;
+    color: #556B2F;
+    background-color: #f2f8f2;
+    padding: 15px;
+    border-left: 6px solid #8FBC8F;
+    margin-bottom: 25px;
+}
+
+.content {
+    padding-left: 20px;
+}
+
+.content p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #333;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+h1 {
+    background-color: #80a1a7;
+    color: white;
+    padding: 25px;
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.list-container {
+    padding: 25px;
+}
+
+li {
+    margin-bottom: 12px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+ul ul, ul ol {
+    margin-top: 12px;
+    padding-left: 30px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+#simple-table {
+    margin: 20px auto;    
+           
+    border: 3px solid #000;      
+    border-collapse: collapse;   
+    text-align: center;
+}
+
+#simple-table th,
+#simple-table td {
+    border: 1px solid #000;  
+    padding: 10px 16px;
+    text-align: center;
+}
+
+#simple-table caption {
+    font-weight: bold;
+    margin-bottom: 8px;
+    caption-side: top;
+    text-align: center;
+}
+
+
+.complex-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 40px auto;
+    border: 2px solid #555;
+}
+
+.complex-table th,
+.complex-table td {
+    border: 1px solid #f30f0f;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+
+.complex-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 40px auto;
+    border: 2px solid #555;
+}
+
+.complex-table th,
+.complex-table td {
+    border: 1px solid #131313;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+
