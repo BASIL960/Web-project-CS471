@@ -54,3 +54,29 @@ def listing_page_view(request):
 
 def tables_page_view(request):
     return render(request, 'bookmodule/tables.html')
+
+
+def __getBooksList():
+    book1 = {'id':12344321, 'title':'Continuous Delivery', 'author':'J.Humble and D. Farley'}
+    book2 = {'id':56788765,'title':'Reversing: Secrets of Reverse Engineering', 'author':'E. Eilam'}
+    book3 = {'id':43211234, 'title':'The Hundred-Page Machine Learning Book', 'author':'Andriy Burkov'}
+    return [book1, book2, book3]
+def search_view(request):
+    if request.method == "POST":
+        string = request.POST.get('keyword','').strip().lower()
+        # checkbox غير المؤشر يعيد None، فإذا كان موجوداً يعود 'on'
+        isTitle = request.POST.get('option1') is not None
+        isAuthor = request.POST.get('option2') is not None
+
+        books = __getBooksList()
+        new_books = []
+        for item in books:
+            contained = False
+            if isTitle and string and string in item['title'].lower():
+                contained = True
+            if (not contained) and isAuthor and string and string in item['author'].lower():
+                contained = True
+            if contained:
+                new_books.append(item)
+        return render(request, 'bookmodule/bookList.html', {'books': new_books})
+    return render(request, 'bookmodule/search.html')

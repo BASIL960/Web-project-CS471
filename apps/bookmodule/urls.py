@@ -17,5 +17,8 @@ path('html5/text/formatting', views.text_formatting_view, name='text_formatting_
 path('html5/listing', views.listing_page_view, name='listing_page'),
 # ... (داخل urlpatterns)
 path('html5/tables', views.tables_page_view, name='tables_page'),
+    path('search/', views.search_view, name='books-search'),
 ]
+
+
 

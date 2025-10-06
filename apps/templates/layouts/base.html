@@ -10,45 +10,21 @@
 <meta charset="UTF-8"> 
 <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- include css file --> 
 {% block stylesheets %}{% endblock stylesheets %} 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-
+awesome/4.7.0/css/font-awesome.min.css">
 </head> 
 <body> 
 {% include "includes/header.html" %} 
 {% block content %} {% endblock content %} 
 {% include "includes/footer.html" %} 
-</body> 
-</html> 
 {% with request.resolver_match.url_name as url_name %} 
 <div class="topnav"> 
-<a class="{% if url_name == 'books.index' %}active{% endif %}" href="{% url 
-"books.index" %}">Home</a> 
-<a class="{% if url_name == 'books.list_books' %}active{% endif %}" href="{% url 
-"books.list_books" %}">List Books</a> 
-<a class="{% if url_name == 'books.aboutus' %}active{% endif %}" href="{% url 
-"books.aboutus" %}">About</a> 
+<a class="{% if url_name == 'books.index' %}active{% endif %}" href="{% url "books.index" %}">Home</a> 
+<a class="{% if url_name == 'books.list_books' %}active{% endif %}" href="{% url "books.list_books" %}">List Books</a> 
+<a class="{% if url_name == 'books.aboutus' %}active{% endif %}" href="{% url "books.aboutus" %}">About</a> 
 </div> 
-{% endwith %} 
-If you want a simple html content for header.html without class attribute in a tag, then add this 
-instead:  
-<div class="topnav">  
-<a href="{% url 'books.index' %}">Home</a>  
-<a href="{% url 'books.list_books' %}">List Books</a>  
-<a href="{% url 'books.aboutus' %}">About</a>  
-</div> 
-Step 4: update index.html to:  
-{% extends "layouts/base.html" %} 
-{% load static %} 
-{% block title %} My First Index HTML Page {% endblock title %} 
-{% block content %} 
-<h1 style="color: blue;">This is heading 1 (Library)</h1> <!-- add inline css --> 
-<p style="color: white;background-color: black;">This is a paragraph text </p> <!-- 
-add inline css --> 
-<a href="https://www.w3schools.com/html/default.asp">Click Here to learn more about 
-HTML & CSS</a> 
-<hr> 
-<!-- This is a comment in HTML, not render in the bowser --> 
-<h2>This is heading 2</h2> 
-<p>This is some other text. <br/> with newline <br/> and another line</p> 
-<hr> 
-<h2>This is heading 2</h2> 
-<p>This is some other text.</p> 
-{% endblock content %}
+{% endwith %}
+
+</body> 
+</html> 
