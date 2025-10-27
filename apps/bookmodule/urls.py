@@ -18,7 +18,7 @@ path('html5/listing', views.listing_page_view, name='listing_page'),
 # ... (داخل urlpatterns)
 path('html5/tables', views.tables_page_view, name='tables_page'),
     path('search/', views.search_view, name='books-search'),
+    path('simple/query', views.simple_query, name='books-simple_query'),
+    path('lookup/query', views.lookup_query, name='books-lookup_query'),
+    
 ]
-
-
-

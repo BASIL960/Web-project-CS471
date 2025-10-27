@@ -1,9 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
-from django.shortcuts import render 
-
 from django.http import HttpResponse
+from .models import Book
 # def index(request):
 #  name = request.GET.get("name") or "world!" #add this line
 #  return HttpResponse("Helloa, "+name) #replace the word “world!”
@@ -80,3 +78,17 @@ def search_view(request):
                 new_books.append(item)
         return render(request, 'bookmodule/bookList.html', {'books': new_books})
     return render(request, 'bookmodule/search.html')
+
+def simple_query(request):
+    # Retrieve multiple objects: books where the title contains 'and' (case-insensitive) [cite: 413]
+    mybooks = Book.objects.filter(title__icontains='and')
+    
+    # Render the results using the bookList.html template [cite: 413]
+    return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+
+def lookup_query(request):
+    mybooks = Book.objects.filter(author__isnull=False).filter(title__icontains='and').filter(edition__gte=2).exclude(price__lte=100)[:10]
+    if len(mybooks) >= 1:
+        return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+    else:
+        return render(request, 'bookmodule/bookList.html', {'books': []})
