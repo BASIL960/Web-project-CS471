@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 from django.http import HttpResponse
-from .models import Book
+from .models import Book, Address, Student  # Import models for Lab 8
+from django.db.models import Q, Count, Sum, Avg, Max, Min # Needed for Lab 8
 # def index(request):
 #  name = request.GET.get("name") or "world!" #add this line
 #  return HttpResponse("Helloa, "+name) #replace the word “world!”
@@ -92,3 +93,43 @@ def lookup_query(request):
         return render(request, 'bookmodule/bookList.html', {'books': mybooks})
     else:
         return render(request, 'bookmodule/bookList.html', {'books': []})
+    
+
+def lab8_task1(request):
+    # List books that have price less than or equal 50 using Q operator
+    books = Book.objects.filter(Q(price__lte=50))
+    return render(request, 'bookmodule/bookList.html', {'books': books})
+
+def lab8_task2(request):
+    # List books with editions > 2 AND (title OR author contains 'qu')
+    query = Q(edition__gt=2) & (Q(title__icontains='qu') | Q(author__icontains='qu'))
+    books = Book.objects.filter(query)
+    return render(request, 'bookmodule/bookList.html', {'books': books})
+
+def lab8_task3(request):
+    # Opposite of Task 2: editions <= 2 AND (neither title nor author contains 'qu')
+    query = Q(edition__lte=2) & ~(Q(title__icontains='qu') | Q(author__icontains='qu'))
+    books = Book.objects.filter(query)
+    return render(request, 'bookmodule/bookList.html', {'books': books})
+
+def lab8_task4(request):
+    # List books and order by their titles
+    books = Book.objects.all().order_by('title')
+    return render(request, 'bookmodule/bookList.html', {'books': books})
+
+def lab8_task5(request):
+    # Display count, total, average, max, and min price
+    aggs = Book.objects.aggregate(
+        book_count=Count('id'),
+        total_price=Sum('price'),
+        avg_price=Avg('price'),
+        max_price=Max('price'),
+        min_price=Min('price')
+    )
+    return render(request, 'bookmodule/aggregates.html', {'aggs': aggs})
+
+def lab8_task7(request):
+    # Show the number of students in each city 
+    # We use annotate() to group by Address and add a 'student_count' field
+    cities = Address.objects.annotate(student_count=Count('student'))
+    return render(request, 'bookmodule/city_counts.html', {'cities': cities})

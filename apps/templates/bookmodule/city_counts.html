@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Students by City {% endblock title %}
+
+{% block content %}
+  <h2>Student Counts by City (Task 7)</h2>
+  <ul>
+    {% for city in cities %}
+      <li>
+        <strong>{{ city.city }}:</strong> {{ city.student_count }} student(s)
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

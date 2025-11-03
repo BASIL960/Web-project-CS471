@@ -1,0 +1,13 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Book Aggregates {% endblock title %}
+
+{% block content %}
+  <h2>Book Aggregates (Task 5)</h2>
+  <p>Total Books: {{ aggs.book_count }}</p>
+  <p>Total Price of All Books: {{ aggs.total_price }}</p>
+  <p>Average Price: {{ aggs.avg_price }}</p>
+  <p>Maximum Price: {{ aggs.max_price }}</p>
+  <p>Minimum Price: {{ aggs.min_price }}</p>
+{% endblock content %}
