@@ -5,7 +5,8 @@ SECRET_KEY = "dm^e!t-1niy9k8am57&k^i_@(n)ew44p-8(wxnyvszur6@z6d6"
 DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 ROOT_URLCONF = "libearyproject.urls"
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INSTALLED_APPS = [
     # Core Django Framework Apps - NO DUPLICATES ALLOWED HERE
     "django.contrib.admin",
@@ -14,7 +15,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
+    'apps.usermodule',
     # Your Project Apps
     "apps.bookmodule.apps.BookmoduleConfig",
     # "apps.usermodule.apps.UsermoduleConfig",
@@ -53,3 +54,5 @@ DATABASES = {
 }
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [(os.path.join(BASE_DIR, "apps/static"))]
+
+LOGIN_URL = '/users/login/'

@@ -15,7 +15,10 @@ from django.db.models.functions import Cast
 from .models import Book, Publisher 
 # الاستيرادات من المسار الرئيسي
 from django.db.models import Sum, F
+# في apps/bookmodule/views.py
 
+# تأكد من إضافة StudentImageForm إلى هذا السطر
+from .forms import StudentForm, Student2Form, StudentImageForm
 # الاستيرادات الخاصة بدوال قاعدة البيانات (يجب عليك إضافة هذا السطر)
 from django.db.models.functions import Cast 
 from django.db.models import FloatField # FloatField غالباً موجودة في models مباشرة
@@ -257,3 +260,181 @@ def lab9_task6(request):
         'task_title': 'Task 6: Count of Filtered Books Per Publisher'
     }
     return render(request, 'bookmodule/lab9_results.html', context)
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required # ضروري لـ Task 3
+# استيراد النماذج
+from .models import Student, Student2, StudentImage
+# استيراد الفورمات
+from .forms import StudentForm, Student2Form, StudentImageForm
+
+# --- دوال Lab 9 (يمكن تركها بدون حماية أو حمايتها حسب الرغبة) ---
+# ... (يمكنك ترك دوال lab9_task1 إلخ كما هي، التركيز في Lab 11 على Lab 10) ...
+# سأضع هنا فقط دوال Lab 10 مع الحماية المطلوبة
+
+# =========================================
+#  Lab 10: Task 1 (Student One-to-Many)
+# =========================================
+
+@login_required # حماية صفحة العرض
+def list_students(request):
+    students = Student.objects.all()
+    context = {
+        'students': students,
+        'view_type': 'list',
+        'task_type': 'task1',
+        'page_title': 'Task 1: Students List',
+        'user': request.user # لتظهر في القالب
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+@login_required # حماية صفحة الإضافة
+def create_student(request):
+    form = StudentForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('list_students')
+    context = {
+        'form': form,
+        'view_type': 'form',
+        'task_type': 'task1',
+        'page_title': 'Add Student (Task 1)'
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+@login_required # حماية صفحة التعديل
+def update_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    form = StudentForm(request.POST or None, instance=student)
+    if form.is_valid():
+        form.save()
+        return redirect('list_students')
+    context = {
+        'form': form,
+        'view_type': 'form',
+        'task_type': 'task1',
+        'page_title': 'Edit Student (Task 1)'
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+@login_required # حماية صفحة الحذف
+def delete_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    if request.method == 'POST':
+        student.delete()
+        return redirect('list_students')
+    context = {
+        'obj_name': student.name,
+        'view_type': 'delete',
+        'task_type': 'task1',
+        'page_title': 'Delete Student (Task 1)'
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+# =========================================
+#  Lab 10: Task 2 (Student Many-to-Many)
+# =========================================
+
+@login_required
+def list_students2(request):
+    students = Student2.objects.all()
+    context = {
+        'students': students,
+        'view_type': 'list',
+        'task_type': 'task2',
+        'page_title': 'Task 2: Students List',
+        'user': request.user
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+@login_required
+def create_student2(request):
+    form = Student2Form(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('list_students2')
+    context = {
+        'form': form,
+        'view_type': 'form',
+        'task_type': 'task2',
+        'page_title': 'Add Student (Task 2)'
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+@login_required
+def update_student2(request, pk):
+    student = get_object_or_404(Student2, pk=pk)
+    form = Student2Form(request.POST or None, instance=student)
+    if form.is_valid():
+        form.save()
+        return redirect('list_students2')
+    context = {
+        'form': form,
+        'view_type': 'form',
+        'task_type': 'task2',
+        'page_title': 'Edit Student (Task 2)'
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+@login_required
+def delete_student2(request, pk):
+    student = get_object_or_404(Student2, pk=pk)
+    if request.method == 'POST':
+        student.delete()
+        return redirect('list_students2')
+    context = {
+        'obj_name': student.name,
+        'view_type': 'delete',
+        'task_type': 'task2',
+        'page_title': 'Delete Student (Task 2)'
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+# =========================================
+#  Lab 10: Task 3 (Image Upload)
+# =========================================
+
+@login_required
+def list_images(request):
+    try:
+        images = StudentImage.objects.all()
+    except NameError:
+        images = []
+    context = {
+        'images': images,
+        'view_type': 'list',
+        'task_type': 'task3',
+        'page_title': 'Task 3: Image Gallery',
+        'user': request.user
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+@login_required
+def upload_image(request):
+    if request.method == 'POST':
+        form = StudentImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list_images')
+    else:
+        form = StudentImageForm()
+    context = {
+        'form': form,
+        'view_type': 'form',
+        'task_type': 'task3',
+        'page_title': 'Upload Image (Task 3)'
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)
+
+@login_required
+def delete_image(request, pk):
+    image = get_object_or_404(StudentImage, pk=pk)
+    if request.method == 'POST':
+        image.delete()
+        return redirect('list_images')
+    context = {
+        'obj_name': image.title,
+        'view_type': 'delete',
+        'task_type': 'task3',
+        'page_title': 'Delete Image'
+    }
+    return render(request, 'bookmodule/lab10_master.html', context)

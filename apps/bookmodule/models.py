@@ -47,13 +47,39 @@ class Address(models.Model):
     def __str__(self):
         return self.city
 
-
 class Student(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
+    def __str__(self):
+        # يجب أن تعرض اسم الطالب وعمره
+        return f"{self.name} (Age: {self.age})"
 
+# apps/bookmodule/models.py
+
+# ... (النماذج السابقة) ...
+
+# Task 2: علاقة Many-to-Many
+class Address2(models.Model):
+    city = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.city
+
+class Student2(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    # هنا العلاقة Many-to-Many
+    addresses = models.ManyToManyField(Address2) 
 
     def __str__(self):
-        return f"{self.title} ({self.year})"
+        return self.name
+    
+# Task 3: Image Upload Model
+class StudentImage(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='students/') # يحتاج مكتبة Pillow
+
+    def __str__(self):
+        return self.title
