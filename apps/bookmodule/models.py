@@ -1,25 +1,59 @@
 from django.db import models
 
-# Create your models here.
+class Publisher(models.Model):
+    name = models.CharField(max_length=200)
+    location = models.CharField(max_length=300)
 
-class Book (models.Model):
-    title = models.CharField(max_length = 50)
-    author = models.CharField(max_length = 50)
-    price = models.FloatField(default = 0.0)
-    edition = models.SmallIntegerField(default = 1)
+    def __str__(self):
+        return self.name
 
-#lab 8 models
+
+class Author(models.Model):
+    name = models.CharField(max_length=200)
+    DOB = models.DateField(null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Book(models.Model):
+    
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)   
+    year = models.IntegerField(null=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    edition = models.IntegerField(default=1)
+
+    
+    quantity = models.IntegerField(default=1)
+    pubdate = models.DateTimeField(null=True)
+    rating = models.SmallIntegerField(default=1)
+
+    publisher = models.ForeignKey(
+        Publisher,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='books'
+    )
+    authors = models.ManyToManyField(Author, blank=True)
+
+    def __str__(self):
+        return f"{self.title} ({self.year})"
+
+    
 class Address(models.Model):
-    city = models.CharField(max_length=100) # [cite: 480]
+    city = models.CharField(max_length=100)
 
     def __str__(self):
         return self.city
 
+
 class Student(models.Model):
-    name = models.CharField(max_length=100) # [cite: 478]
-    age = models.IntegerField() # [cite: 478]
-    # Foreign key to table address [cite: 478]
-    address = models.ForeignKey(Address, on_delete=models.CASCADE) 
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+
+
 
     def __str__(self):
-        return self.name
+        return f"{self.title} ({self.year})"

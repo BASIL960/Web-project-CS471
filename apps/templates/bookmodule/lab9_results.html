@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ task_title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 80%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>{{ task_title }}</h1>
+    
+    {% if books and task_title == 'Task 1: Percentage Availability' %}
+        <h2>Books (Total Stock: {{ total_stock }})</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                    <th>Percentage (%)</th>
+                    <th>Publisher</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.quantity }}</td>
+                    <td>{{ book.percentage|floatformat:2 }}%</td>
+                    <td>{{ book.publisher.name|default:"N/A" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+    {% elif publishers %}
+        <h2>Publishers Results</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Publisher Name</th>
+                    {% if task_title == 'Task 2: Publisher Total Book Stock' %}
+                        <th>Total Book Stock</th>
+                    {% elif task_title == 'Task 3: Oldest Book Date Per Publisher' %}
+                        <th>Oldest Pub Date</th>
+                    {% elif task_title == 'Task 4: Min, Max, and Average Price Per Publisher' %}
+                        <th>Avg Price</th>
+                        <th>Min Price</th>
+                        <th>Max Price</th>
+                    {% elif task_title == 'Task 5: Count of Highly Rated Books Per Publisher (Rating >= 4)' %}
+                        <th>High Rated Count</th>
+                    {% elif task_title == 'Task 6: Count of Filtered Books Per Publisher' %}
+                        <th>Filtered Book Count</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for publisher in publishers %}
+                <tr>
+                    <td>{{ publisher.name }}</td>
+                    {% if task_title == 'Task 2: Publisher Total Book Stock' %}
+                        <td>{{ publisher.total_book_stock|default:"0" }}</td>
+                    {% elif task_title == 'Task 3: Oldest Book Date Per Publisher' %}
+                        <td>{{ publisher.oldest_book_date|date:"Y-m-d"|default:"N/A" }}</td>
+                    {% elif task_title == 'Task 4: Min, Max, and Average Price Per Publisher' %}
+                        <td>{{ publisher.avg_price|floatformat:2|default:"N/A" }}</td>
+                        <td>{{ publisher.min_price|floatformat:2|default:"N/A" }}</td>
+                        <td>{{ publisher.max_price|floatformat:2|default:"N/A" }}</td>
+                    {% elif task_title == 'Task 5: Count of Highly Rated Books Per Publisher (Rating >= 4)' %}
+                        <td>{{ publisher.high_rated_count }}</td>
+                    {% elif task_title == 'Task 6: Count of Filtered Books Per Publisher' %}
+                        <td>{{ publisher.filtered_book_count }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p>No data found for this task or the query returned empty results.</p>
+    {% endif %}
+    
+    <hr>
+    <p>Return to <a href="/">Home</a></p>
+</body>
+</html>
