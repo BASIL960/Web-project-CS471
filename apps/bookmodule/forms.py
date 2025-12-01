@@ -1,6 +1,14 @@
 from django import forms
 from .models import Student, Student2
+# في ملف forms.py
+from django import forms
+from .models import Book
 
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'price', 'quantity', 'pubdate', 'rating', 'publisher', 'authors']
+        
 # Task 1: استمارة الطالب (One-to-Many)
 class StudentForm(forms.ModelForm):
     class Meta:

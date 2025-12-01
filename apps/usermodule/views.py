@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages  # لاستخدام الرسائل (Task 5) [cite: 67]
 
 # ----------------------------------------
-# Task 1: Register User [cite: 63]
+# Lab 12 - Task 1: Register User [cite: 63]
 # ----------------------------------------
 def register_user(request):
     if request.method == 'POST':
